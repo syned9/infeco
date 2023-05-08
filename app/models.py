@@ -22,3 +22,28 @@ class Appartement(db.Model):
     def __repr__(self):
         return '<Appartement %r>' % self.adresse
 
+
+
+class EtatDesLieux(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+
+class Locataire(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+
+class Paiement(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+class Contrat(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+class Agence(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+class TypePaiement(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+class Quittance(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+

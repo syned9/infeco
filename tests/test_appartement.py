@@ -5,8 +5,6 @@ from app.models import Appartement
 @pytest.mark.usefixtures('new_appartement')
 class TestAppartement():
 
-
-
     def test_create_appartement(self, new_appartement):
         # test pour créer un appartement
         assert new_appartement.id is not None
