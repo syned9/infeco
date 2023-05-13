@@ -8,6 +8,14 @@ class TestAppartement():
     def test_create_appartement(self, new_appartement):
         # test pour créer un appartement
         assert new_appartement.id is not None
+        assert new_appartement.adresse == 'Ker Anne'
+        assert new_appartement.complement == ''
+        assert new_appartement.ville == 'Saint Père en retz'
+        assert new_appartement.code_postal == '44320'
+        assert new_appartement.loyer == 2000
+        assert new_appartement.charges == 230
+        assert new_appartement.depot_garantie == 4000
+        assert new_appartement.agence_id == 1
 
     def test_modify_appartement(self, new_appartement):
         # test pour modifier appartement les prix d'un appartement

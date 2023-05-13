@@ -7,7 +7,7 @@ class TestAgence:
     def test_create_agence(self, new_agence):
         assert new_agence.id is not None
         assert new_agence.nom == 'Agence 1'
-        assert new_agence.prelevement == '8%'
+        assert new_agence.prelevement == 8
 
     def test_update_agence(self, new_agence):
         new_agence.nom = 'Agence 2'

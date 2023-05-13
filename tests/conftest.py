@@ -1,13 +1,14 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 import pytest
 from app import create_app, db
 from instance.config import TestingConfig
-from app.models import Appartement, EtatDesLieux, Locataire, Paiement, Contrat, Agence, TypePaiement, Quittance
+from app.models import Appartement, EtatLieux, Locataire, Paiement, Contrat, Agence, TypePaiement, Quittance
 
 @pytest.fixture(scope='module')
 def test_db():
     app = create_app(TestingConfig)
     with app.app_context():
+        db.drop_all()
         db.create_all()
         yield db
         db.session.remove()
@@ -17,7 +18,7 @@ def test_db():
 def new_appartement(test_db):
     appartement = Appartement(adresse="Ker Anne", complement="",
                                    ville="Saint Père en retz", code_postal="44320", loyer=2000,
-                                   charges=230, depot_garantie=4000)
+                                   charges=230, depot_garantie=4000, agence_id=1)
     test_db.session.add(appartement)
     test_db.session.commit()
     yield appartement
@@ -25,12 +26,12 @@ def new_appartement(test_db):
     test_db.session.commit()
 
 @pytest.fixture(scope='function')
-def new_etatDesLieux(test_db):
-    edl = EtatDesLieux(date='2023-02-12', remarque='Propre', situation=0)
+def new_EtatLieux(test_db):
+    edl = EtatLieux(date='2023-02-12', remarque='Propre', situation=0, contrat_id=1)
     test_db.session.add(edl)
     test_db.session.commit()
-    yield EtatDesLieux
-    test_db.session.delete(EtatDesLieux)
+    yield edl
+    test_db.session.delete(edl)
     test_db.session.commit()
 
 @pytest.fixture(scope='function')
@@ -45,7 +46,7 @@ def new_locataire(test_db):
 @pytest.fixture(scope='function')
 def new_paiement(test_db):
      # Créer un nouvel objet Paiement
-    paiement = Paiement(date='2023-06-16', montant=900, origine='locataire', type=1)
+    paiement = Paiement(date='2023-06-16', montant=900, origine=0, type_paiement_id=1, contrat_id=1)
     # Ajouter le nouvel objet à la base de données pour le test
     test_db.session.add(paiement)
     test_db.session.commit()
@@ -58,7 +59,7 @@ def new_paiement(test_db):
 @pytest.fixture(scope='function')
 def new_contrat(test_db):
      # Créer un nouvel objet Contrat
-    contrat = Contrat(date_debut='2023-03-17', date_fin='2024-06-31')    
+    contrat = Contrat(date_debut='2023-03-17', date_fin='2024-06-30', locataire_id=1, appartement_id=1)    
     # Ajouter le nouvel objet à la base de données pour le test
     test_db.session.add(contrat)
     test_db.session.commit()
@@ -71,7 +72,7 @@ def new_contrat(test_db):
 @pytest.fixture(scope='function')
 def new_agence(test_db):
      # Créer un nouvel objet Agence
-    agence = Agence(nom='Agence 1', prelevement='8%')    
+    agence = Agence(nom='Agence 1', prelevement='8')    
     # Ajouter le nouvel objet à la base de données pour le test
     test_db.session.add(agence)
     test_db.session.commit()
@@ -98,10 +99,11 @@ def new_typePaiement(test_db):
 def new_quittance(test_db):
      # Créer un nouvel objet Quittance
     quittance = Quittance(
-        date_debut=datetime.date.today(),
-        date_fin=datetime.date.today() + datetime.timedelta(days=30),
+        date_debut=datetime.today(),
+        date_fin=datetime.today() + timedelta(days=30),
         montant=900,
-        date_creation=datetime.datetime.now()
+        date_creation=datetime.now(),
+        locataire_id=1
     )    # Ajouter le nouvel objet à la base de données pour le test
     test_db.session.add(quittance)
     test_db.session.commit()
