@@ -1,0 +1,11 @@
+<h1>{{ title }}</h1>
+<div class="messages">
+    {% include 'messages.html' %}
+</div>
+<ul class="nav flex-column">
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url_for(route + '.index') }}">
+            <span data-feather="arrow-left-circle" class="align-text-bottom"></span>
+            Retour à la liste</a>
+    </li>
+</ul>

@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}    
+{% block main %}
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        {% include 'headerForm.html' %}
+        <form method="post">
+            {{ form.hidden_tag()}}
+            <div class="mb-3">
+                {{form.date.label(class="form-label")}}
+                {{form.date(class="form-control")}}
+            </div>
+            <div class="mb-3">
+                {{form.remarque.label(class="form-label")}}
+                {{form.remarque(class="form-control")}}
+            </div>
+            {{form.situation.label(class="form-check-label")}}
+            {% for subfield in form.situation %}
+                <div class="form-check">
+                    {{subfield.label(class="form-check-label")}}
+                    {{subfield(class="form-check-input")}}
+                </div>
+            {% endfor %}
+            <div class="mb-3">
+                {{form.contrat_id.label(class="form-label")}}
+                {{form.contrat_id(class="form-control")}}
+                <span class="error">{{ form.contrat_id.errors }}</span>
+            </div>
+            {{form.submit(class="btn btn-primary")}}
+        </form>
+    </main>
+{% endblock %}

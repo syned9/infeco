@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}    
+{% block main %}
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        {% include 'headerForm.html' %}
+        <form method="post" class="row g-3">
+            {{ form.hidden_tag()}}
+            <div class="col-8">
+                {{form.libelle.label(class="form-label")}}
+                {{form.libelle(class="form-control")}}
+            </div>
+            <div class="col-5">
+                {{form.appartement_id.label(class="form-label")}}
+                {{form.appartement_id(class="form-control")}}
+            </div>
+            <div class="col-3">
+                {{form.locataire_id.label(class="form-label")}}
+                {{form.locataire_id(class="form-control")}}
+            </div>
+            <h3>Durée</h3>
+            <div class="col-md-4">
+                {{form.date_debut.label(class="form-label")}}
+                {{form.date_debut(class="form-control")}}
+            </div>
+            <div class="col-md-4">
+                {{form.date_fin.label(class="form-label")}}
+                {{form.date_fin(class="form-control")}}
+            </div>
+            <div class="col-12">
+                {{form.submit(class="btn btn-primary")}}
+            </div>
+        </form>
+    </main>
+{% endblock %}

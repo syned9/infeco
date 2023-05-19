@@ -1,0 +1,36 @@
+<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-body-tertiary sidebar collapse">
+    <div class="position-sticky pt-3 sidebar-sticky">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{{ url_for('appartement_bp.index') }}">
+            <span data-feather="home" class="align-text-bottom"></span>
+            Appartements
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('locataire_bp.index') }}">
+            <span data-feather="users" class="align-text-bottom"></span>
+            Locataires
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('contrat_bp.index') }}">
+            <span data-feather="file-text" class="align-text-bottom"></span>
+            Contrats
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('etatLieux_bp.index') }}">
+            <span data-feather="clipboard" class="align-text-bottom"></span>
+            Etats des lieux
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('paiement_bp.index') }}">
+            <span data-feather="credit-card" class="align-text-bottom"></span>
+            Paiements
+          </a>
+        </li>
+      </ul>
+    </div>
+</nav>

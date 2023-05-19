@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}    
+{% block main %}
+  <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    {% include 'headerForm.html' %}
+    <form method="post" class="row g-3">
+        {{ form.hidden_tag()}}
+        <div class="col-9">
+          {{form.libelle.label(class="form-label")}}
+          {{form.libelle(class="form-control")}}
+        </div>
+        <div class="col-9">
+          {{form.adresse.label(class="form-label")}}
+          {{form.adresse(class="form-control")}}
+        </div>
+        <div class="col-9">
+          {{form.complement.label(class="form-label")}}
+          {{form.complement(class="form-control")}}
+        </div>
+        <div class="col-md-7">
+          {{form.ville.label(class="form-label")}}
+          {{form.ville(class="form-control")}}
+        </div>
+        <div class="col-md-2">
+          {{form.code_postal.label(class="form-label")}}
+          {{form.code_postal(class="form-control")}}
+        </div>
+        <h3>Montant</h3>
+        <div class="col-md-3">
+          {{form.loyer.label(class="form-label")}}
+          {{form.loyer(class="form-control")}}
+        </div>
+        <div class="col-md-3">
+          {{form.charges.label(class="form-label")}}
+          {{form.charges(class="form-control")}}
+        </div>
+        <div class="col-md-3">
+          {{form.depot_garantie.label(class="form-label")}}
+          {{form.depot_garantie(class="form-control")}}
+        </div>
+      <div class="col-12">
+      {{form.submit(class="btn btn-primary")}}
+      </div>
+    </form>
+  </main>
+{% endblock %}

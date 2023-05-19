@@ -5,18 +5,24 @@ from instance.config import TestingConfig
 from app.models import Appartement, EtatLieux, Locataire, Paiement, Contrat, Agence, TypePaiement, Quittance
 
 @pytest.fixture(scope='module')
+def client():    
+    app = create_app(TestingConfig)
+    with app.test_client() as client:
+        yield client
+
+@pytest.fixture(scope='module')
 def test_db():
     app = create_app(TestingConfig)
     with app.app_context():
-        db.drop_all()
-        db.create_all()
+        # db.drop_all()
+        # db.create_all()
         yield db
-        db.session.remove()
+        # db.session.remove()
         # db.drop_all()
 
 @pytest.fixture(scope='function')
 def new_appartement(test_db):
-    appartement = Appartement(adresse="Ker Anne", complement="",
+    appartement = Appartement(libelle="appartement 1", adresse="Ker Anne", complement="",
                                    ville="Saint Père en retz", code_postal="44320", loyer=2000,
                                    charges=230, depot_garantie=4000, agence_id=1)
     test_db.session.add(appartement)
@@ -46,7 +52,7 @@ def new_locataire(test_db):
 @pytest.fixture(scope='function')
 def new_paiement(test_db):
      # Créer un nouvel objet Paiement
-    paiement = Paiement(date='2023-06-16', montant=900, origine=0, type_paiement_id=1, contrat_id=1)
+    paiement = Paiement(libelle="paiement 1", date='2023-06-16', montant=900, origine=0, type_paiement_id=1, contrat_id=1)
     # Ajouter le nouvel objet à la base de données pour le test
     test_db.session.add(paiement)
     test_db.session.commit()
@@ -59,7 +65,7 @@ def new_paiement(test_db):
 @pytest.fixture(scope='function')
 def new_contrat(test_db):
      # Créer un nouvel objet Contrat
-    contrat = Contrat(date_debut='2023-03-17', date_fin='2024-06-30', locataire_id=1, appartement_id=1)    
+    contrat = Contrat(libelle="contrat 1", date_debut='2023-03-17', date_fin='2024-06-30', locataire_id=1, appartement_id=1)    
     # Ajouter le nouvel objet à la base de données pour le test
     test_db.session.add(contrat)
     test_db.session.commit()
