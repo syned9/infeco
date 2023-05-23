@@ -18,7 +18,7 @@ def index():
 @appartement_bp.route('/appartement/add', methods=['get', 'post'])
 @login_required
 def add():
-    try:
+    # try:
         form = AppartementForm()
         if form.validate_on_submit():
             # Insert appartement in BDD
@@ -31,9 +31,9 @@ def add():
             flash('L\'appartement a bien été enregistrer', 'success')
             return redirect(url_for('appartement_bp.index'))
         return render_template('appartement/add.html', form=form, title='Ajouter un appartement', route='appartement_bp')
-    except Exception:
-        flash('Erreur, un problème est survenu lors de l\'ajout de l\'appartement', 'danger')
-        return redirect(url_for('appartement_bp.index'))
+    # except Exception:
+    #     flash('Erreur, un problème est survenu lors de l\'ajout de l\'appartement', 'danger')
+    #     return redirect(url_for('appartement_bp.index'))
 
 @appartement_bp.route('/appartement/edit/<int:id>', methods=['get', 'post'])
 @login_required
