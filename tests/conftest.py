@@ -14,11 +14,11 @@ def client():
 def test_db():
     app = create_app(TestingConfig)
     with app.app_context():
-        # db.drop_all()
-        # db.create_all()
+        db.drop_all()
+        db.create_all()
         yield db
-        # db.session.remove()
-        # db.drop_all()
+        db.session.remove()
+        db.drop_all()
 
 @pytest.fixture(scope='function')
 def new_appartement(test_db):

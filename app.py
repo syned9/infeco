@@ -1,23 +1,26 @@
-from app import db, models, create_app
-from functools import wraps
-from flask import redirect, url_for, request
-from flask_login import current_user
+from app import db,create_app
+from app.models import TypePaiement
 from instance.config import DevelopmentConfig, ProductionConfig, TestingConfig
 
-app = create_app(DevelopmentConfig)
-
-# @app.before_request
-# def before_request():
-#     if request.endpoint != 'user_bp.login' and not current_user.is_authenticated:
-#         return redirect(url_for('user_bp.login'))
+app = create_app(ProductionConfig)
 
 with app.app_context():
         db.create_all()
+        # Vérifier si les types de paiement existent déjà
+        if not TypePaiement.query.filter_by(libelle='loyer').first():
+                # ajout des types de paiement
+                typePaiement = TypePaiement(libelle='loyer')
+                db.session.add(typePaiement)
+                
+        if not TypePaiement.query.filter_by(libelle='charges').first():
+                typePaiement2 = TypePaiement(libelle='charges')
+                db.session.add(typePaiement2)
+                
+        if not TypePaiement.query.filter_by(libelle='dépôt de garantie').first():
+                typePaiement3 = TypePaiement(libelle='dépôt de garantie')
+                db.session.add(typePaiement3)
 
-
-        
-        # db.session.commit()
-     
+        db.session.commit()
 
 if __name__ == '__main__':
     app.run()
