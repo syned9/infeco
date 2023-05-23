@@ -1,5 +1,5 @@
 from app import db,create_app
-from app.models import TypePaiement, Role
+from app.models import TypePaiement, Role, Agence
 from instance.config import DevelopmentConfig, ProductionConfig, TestingConfig
 import os
 
@@ -24,6 +24,10 @@ with app.app_context():
         if not Role.query.filter_by(name='utilisateur').first():
                 role = Role(name='utilisateur')
                 db.session.add(role)
+
+        if not Agence.query.filter_by(nom='Agence 1').first():
+                agence = Agence(nom='Agence 1', prelevement=8)
+                db.session.add(agence)
 
         db.session.commit()
 
