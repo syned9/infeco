@@ -1,19 +1,26 @@
-from flask import Flask, Blueprint, request, render_template, redirect, url_for, flash
+from flask import Blueprint, request, render_template, redirect, url_for, flash
 from app.forms import EtatLieuxForm
 from app.models import EtatLieux, Contrat
 from app import db
+from sqlalchemy.orm import joinedload
+from flask_security import login_required
 
 etatLieux_bp = Blueprint('etatLieux_bp', __name__)
 
 @etatLieux_bp.route('/etatLieux')
+@login_required
 def index():
      # Select all etatLieuxs in BDD
     etatLieux = db.session.query(EtatLieux).all()
+    for etatLieu in etatLieux:
+        # Charger les relations pour éviter les requêtes supplémentaires
+        db.session.query(EtatLieux).options(joinedload(EtatLieux.contrat)).filter(EtatLieux.id == etatLieu.id)
     # Trier les etatLieuxs par date
     etatLieux_tries = sorted(etatLieux, key=lambda x: x.date)
     return render_template('etatLieux/index.html', title='Liste état des lieux', allEtatLieux=etatLieux_tries, nb_etatLieux=len(etatLieux_tries))
 
 @etatLieux_bp.route('/etatLieux/add', methods=['get', 'post'])
+@login_required
 def add():
     try:
         contrats = db.session.query(Contrat).all()
@@ -36,6 +43,7 @@ def add():
         return redirect(url_for('etatLieux_bp.index'))
 
 @etatLieux_bp.route('/etatLieux/edit/<int:id>', methods=['get', 'post'])
+@login_required
 def edit(id):
     try:
         # Select etatLieux in BDD
@@ -70,6 +78,7 @@ def edit(id):
         return redirect(url_for('etatLieux_bp.index'))
 
 @etatLieux_bp.route('/etatLieux/del/<int:id>', methods=['get', 'post'])
+@login_required
 def delete(id):
     try:
         # Select etatLieux in BDD

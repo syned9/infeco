@@ -11,38 +11,9 @@
             </div>
             <div class="col-md-6">
                 <div class="d-flex flex-wrap align-items-center justify-content-end gap-2 mb-3">
-                    <!-- <div>
-                        <ul class="nav nav-pills">
-                            <li class="nav-item">
-                                <a
-                                    aria-current="page"
-                                    href="#"
-                                    class="router-link-active router-link-exact-active nav-link active"
-                                    data-bs-toggle="tooltip"
-                                    data-bs-placement="top"
-                                    title=""
-                                    data-bs-original-title="List"
-                                    aria-label="List"
-                                >
-                                    <i class="bx bx-list-ul"></i>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Grid" aria-label="Grid"><i class="bx bx-grid-alt"></i></a>
-                            </li>
-                        </ul>
-                    </div> -->
                     <div>
                         <a href="{{ url_for('appartement_bp.add') }}" class="btn btn-primary"><i class="bx bx-plus me-1"></i> Ajouter un appartement</a>
                     </div>
-                    <!-- <div class="dropdown">
-                        <a class="btn btn-link text-muted py-1 font-size-16 shadow-none dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bx bx-dots-horizontal-rounded"></i></a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </div> -->
                 </div>
             </div>
         </div>
@@ -53,9 +24,6 @@
                         <table class="table project-list-table table-nowrap align-middle table-borderless">
                             <thead>
                                 <tr>
-                                    <!-- <th scope="col" class="ps-4" style="width: 50px;">
-                                        <div class="form-check font-size-16"><input type="checkbox" class="form-check-input" id="contacusercheck" /><label class="form-check-label" for="contacusercheck"></label></div>
-                                    </th> -->
                                     <th scope="col">Libellé</th>
                                     <th scope="col">Adresse</th>
                                     <th scope="col">Complément</th>
@@ -70,10 +38,7 @@
                             <tbody>
                                 {% for appartement in appartements %}
                                     <tr>
-                                        <!-- <th scope="row" class="ps-4">
-                                            <div class="form-check font-size-16"><input type="checkbox" class="form-check-input" id="contacusercheck1" /><label class="form-check-label" for="contacusercheck1"></label></div>
-                                        </th> -->
-                                        <td><a href="#" class="text-body">{{appartement.libelle}}</a></td>
+                                        <td>{{appartement.libelle}}</td>
                                         <td>{{appartement.adresse}}</td>
                                         <td>{{appartement.complement}}</td>
                                         <td>{{appartement.ville}}</td>
@@ -89,12 +54,6 @@
                                                 <li class="list-inline-item">
                                                     <a href="{{ url_for('appartement_bp.delete', id=appartement.id) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" class="px-2 text-danger"><i class="bx bx-trash-alt font-size-18"></i></a>
                                                 </li>
-                                                <!-- <li class="list-inline-item dropdown">
-                                                    <a class="text-muted dropdown-toggle font-size-18 px-2" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true"><i class="bx bx-dots-vertical-rounded"></i></a>
-                                                    <div class="dropdown-menu dropdown-menu-end">
-                                                        <a class="dropdown-item" href="#">Action</a><a class="dropdown-item" href="#">Another action</a><a class="dropdown-item" href="#">Something else here</a>
-                                                    </div>
-                                                </li> -->
                                             </ul>
                                         </td>
                                     </tr>

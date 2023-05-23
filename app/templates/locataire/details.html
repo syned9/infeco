@@ -1,0 +1,106 @@
+{% extends 'layout.html' %}   
+{% block main %}
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        {% include 'headerForm.html' %}
+        <div class="team-single">
+            <div class="row">
+                <div class="col-lg-4 col-md-5 xs-margin-30px-bottom">
+                    <div class="team-single-img">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="">
+                    </div>
+                </div>
+
+                <div class="col-lg-8 col-md-7">
+                    <div class="team-single-text padding-50px-left sm-no-padding-left">
+                        <h4 class="font-size38 sm-font-size32 xs-font-size30">{{ locataire.nom }} {{ locataire.prenom }}</h4>
+                        <p class="no-margin-bottom"></p>
+                        <div class="contact-info-section margin-40px-tb">
+                            <ul class="list-style9 no-margin">
+                                <li>
+                                    <div class="row">
+                                        <div class="col-md-5 col-5">
+                                            <i class="fas fa-mobile-alt text-purple"></i>
+                                            <strong class="margin-10px-left xs-margin-four-left text-purple">Téléphone:</strong>
+                                        </div>
+                                        <div class="col-md-7 col-7">
+                                            <p>{{ locataire.telephone }}</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="row">
+                                        <div class="col-md-5 col-5">
+                                            <i class="fas fa-envelope text-pink"></i>
+                                            <strong class="margin-10px-left xs-margin-four-left text-pink">Email:</strong>
+                                        </div>
+                                        <div class="col-md-7 col-7">
+                                            <p><a href="#">{{ locataire.email }}</a></p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-7">
+                                <h5 class="font-size24 sm-font-size22 xs-font-size20">Contrat(s)</h5>
+                                <div class="sm-no-margin">
+                                    <table class="table project-list-table table-nowrap align-middle table-borderless">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Libellé</th>
+                                                <th scope="col">date_debut</th>
+                                                <th scope="col">date_fin</th>
+                                                <th scope="col" style="width: 200px;">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for contrat in locataire.contrats %}
+                                            <tr>
+                                                <td>{{contrat.libelle}}</td>
+                                                <td>{{contrat.date_debut.strftime("%d/%m/%Y")}}</td>
+                                                <td>{{contrat.date_fin.strftime("%d/%m/%Y")}}</td>
+                                                <td>
+                                                    <ul class="list-inline mb-0">
+                                                        <li class="list-inline-item">
+                                                            <a href="{{ url_for('quittance_bp.add', contrat_id=contrat.id) }}" class="btn btn-primary btn-sm"><i class="bx bx-plus me-1"></i> Générer une quittance</a>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-1" style="height: auto; width: auto;">
+                                <div class="vr"></div>
+                            </div>
+                            <div class="col-md-4">
+                                <h5 class="font-size24 sm-font-size22 xs-font-size20">Quittance(s)</h5>
+                                <div class="sm-no-margin">
+                                    <table class="table project-list-table table-nowrap align-middle table-borderless">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">date_debut</th>
+                                                <th scope="col">date_fin</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for quittance in locataire.quittances %}
+                                            <tr>
+                                                <td>{{quittance.date_debut.strftime("%d/%m/%Y")}}</td>
+                                                <td>{{quittance.date_fin.strftime("%d/%m/%Y")}}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

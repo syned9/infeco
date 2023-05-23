@@ -1,0 +1,27 @@
+{% extends 'layout.html' %} 
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+{% endblock %}
+{% block header %}{% endblock %}
+{% block navigation %}{% endblock %}
+{% block main %}
+    <main class="form-signin w-100 m-auto text-center">
+        <div class="messages">
+            {% include 'messages.html' %}
+        </div>
+        <form method="post">
+                {{ form.hidden_tag()}}
+            <h1 class="h3 mb-3 fw-normal">Connectez vous</h1>
+        
+            <div class="form-floating">
+                {{form.username.label()}}
+                {{form.username(class="form-control")}}
+            </div>
+            <div class="form-floating">
+                {{form.password.label()}}
+                {{form.password(class="form-control")}}
+            </div>
+            {{form.submit(class="w-100 btn btn-lg btn-primary")}}
+        </form>
+    </main>
+{% endblock %}

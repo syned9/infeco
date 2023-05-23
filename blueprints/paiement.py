@@ -1,19 +1,26 @@
-from flask import Flask, Blueprint, request, render_template, redirect, url_for, flash
+from flask import Blueprint, request, render_template, redirect, url_for, flash
 from app.forms import PaiementForm
 from app.models import Paiement, TypePaiement, Contrat
 from app import db
+from sqlalchemy.orm import joinedload
+from flask_security import login_required
 
 paiement_bp = Blueprint('paiement_bp', __name__)
 
 @paiement_bp.route('/paiement')
+@login_required
 def index():
     # Select all paiements in BDD
     paiements = db.session.query(Paiement).all()
+    for paiement in paiements:
+        # Charger les relations pour éviter les requêtes supplémentaires
+        db.session.query(Paiement).options(joinedload(Paiement.type_paiement), joinedload(Paiement.contrat)).filter(Paiement.id == paiement.id)
     # Trier les paiements par date
     paiements_tries = sorted(paiements, key=lambda x: x.date)
     return render_template('paiement/index.html', title='Liste paiements', paiements=paiements_tries, nb_paiements=len(paiements_tries))
 
 @paiement_bp.route('/paiement/add', methods=['get', 'post'])
+@login_required
 def add():
     try:
         type_paiements = db.session.query(TypePaiement).all()
@@ -41,6 +48,7 @@ def add():
         return redirect(url_for('paiement_bp.index'))
 
 @paiement_bp.route('/paiement/edit/<int:id>', methods=['get', 'post'])
+@login_required
 def edit(id):
     try:
         # Select paiement in BDD
@@ -79,6 +87,7 @@ def edit(id):
         return redirect(url_for('paiement_bp.index'))
 
 @paiement_bp.route('/paiement/del/<int:id>', methods=['get', 'post'])
+@login_required
 def delete(id):
     try:
         # Select paiement in BDD

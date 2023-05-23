@@ -163,3 +163,12 @@ body {
   .bd-mode-toggle {
     z-index: 1500;
   }
+
+.vr {
+  height: 100%;
+}
+
+.titleQuittance {
+  display: flex;
+  justify-content: space-between;
+}

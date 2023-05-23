@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, FloatField, DateTimeField, RadioField, SelectField, TextAreaField, DateField, SubmitField, DecimalField
+from wtforms import StringField, PasswordField, RadioField, SelectField, TextAreaField, DateField, SubmitField, DecimalField
 from wtforms.validators import DataRequired, Email
 
 class AppartementForm(FlaskForm):
@@ -35,6 +35,7 @@ class ContratForm(FlaskForm):
     date_fin = DateField('Date fin de contrat', validators=[DataRequired()])
     locataire_id = SelectField('Locataire', choices=[], validators=[DataRequired()])
     appartement_id = SelectField('Appartement', choices=[], validators=[DataRequired()])
+    montant =  DecimalField('Montant', validators=[DataRequired()])
     submit = SubmitField('Valider')
 
 class EtatLieuxForm(FlaskForm):
@@ -48,5 +49,17 @@ class QuittanceForm(FlaskForm):
     date_debut = DateField('Date debut de la quittance', validators=[DataRequired()])
     date_fin = DateField('Date fin de la quittance', validators=[DataRequired()])
     submit = SubmitField('Générer')
+
+class UserForm(FlaskForm):
+    username = StringField('Nom d\'utilisateur', validators=[DataRequired()])
+    password = PasswordField('Mot de passe', validators=[DataRequired()])
+    # role = SelectField('Role', choices=[], validators=[DataRequired()])
+    submit = SubmitField('Créer')
+
+class LoginForm(FlaskForm):
+    username = StringField('Nom d\'utilisateur', validators=[DataRequired()])
+    password = PasswordField('Mot de passe', validators=[DataRequired()])
+    # remember_me = BooleanField('Se souvenir de moi')
+    submit = SubmitField('Connexion')
 
 

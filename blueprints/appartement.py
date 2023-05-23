@@ -1,11 +1,13 @@
-from flask import Flask, Blueprint, request, render_template, redirect, url_for, flash
+from flask import Blueprint, request, render_template, redirect, url_for, flash
 from app.forms import AppartementForm
 from app.models import Appartement
 from app import db
+from flask_security import login_required
 
 appartement_bp = Blueprint('appartement_bp', __name__)
 
 @appartement_bp.route('/appartement')
+@login_required
 def index():
     # Select all appartements in BDD
     appartements = db.session.query(Appartement).all()
@@ -14,6 +16,7 @@ def index():
     return render_template('appartement/index.html', title='Liste appartements', appartements=appartements_tries, nb_appartements=len(appartements_tries))
 
 @appartement_bp.route('/appartement/add', methods=['get', 'post'])
+@login_required
 def add():
     try:
         form = AppartementForm()
@@ -33,6 +36,7 @@ def add():
         return redirect(url_for('appartement_bp.index'))
 
 @appartement_bp.route('/appartement/edit/<int:id>', methods=['get', 'post'])
+@login_required
 def edit(id):
     try:
         # Select appartement in BDD
@@ -61,6 +65,7 @@ def edit(id):
         return redirect(url_for('appartement_bp.index'))
 
 @appartement_bp.route('/appartement/del/<int:id>', methods=['get', 'post'])
+@login_required
 def delete(id):
     try:
         # Select appartement in BDD

@@ -1,12 +1,16 @@
-from flask import Flask, Blueprint, request, render_template, redirect, url_for, flash
+from flask import Blueprint, request, render_template, redirect, url_for, flash
 from app.forms import ContratForm
-from app.models import Contrat, Appartement, Locataire
-from pprint import pprint
+from app.models import Contrat, Appartement, Locataire, Paiement
+from datetime import date
+from sqlalchemy import desc
 from app import db
+from flask_security import login_required
+
 
 contrat_bp = Blueprint('contrat_bp', __name__)
 
 @contrat_bp.route('/contrat')
+@login_required
 def index():
     # Select all contrats, appartements, locataires in BDD
     contrats = db.session.query(Contrat).all()
@@ -29,6 +33,7 @@ def index():
     return render_template('contrat/index.html', title='Liste contrats', data=data, nb_contrats=len(contrats_tries))
 
 @contrat_bp.route('/contrat/add', methods=['get', 'post'])
+@login_required
 def add():
     try:
         appartements = db.session.query(Appartement).all()
@@ -43,11 +48,20 @@ def add():
         if form.validate_on_submit():
             # Insert contrat in BDD
             contrat = Contrat(libelle=form.libelle.data, date_debut=form.date_debut.data, date_fin=form.date_fin.data, 
-                                locataire_id=form.locataire_id.data, appartement_id=form.appartement_id.data)
+                                locataire_id=form.locataire_id.data, appartement_id=form.appartement_id.data) #, statut=0
             db.session.add(contrat)
             db.session.commit()
             # Message flash ok
             flash('Le contrat a bien été enregistrer', 'success')
+            contrat_id = db.session.query(Contrat.id).order_by(desc(Contrat.id)).first()
+            # Insert paiement in BDD
+            paiement = Paiement(libelle='Dépot de garantie', date=date.today(), montant=form.montant.data,
+                                origine=0, type_paiement_id=3, 
+                                contrat_id=contrat_id[0])
+            db.session.add(paiement)
+            db.session.commit()
+            # Message flash ok
+            flash('Le dépôt de garantie a bien été validé', 'success')
             return redirect(url_for('contrat_bp.index'))
         return render_template('contrat/add.html', form=form, title='Ajouter un contrat', route='contrat_bp')
     except Exception:
@@ -55,6 +69,7 @@ def add():
         return redirect(url_for('contrat_bp.index'))
 
 @contrat_bp.route('/contrat/edit/<int:id>', methods=['get', 'post'])
+@login_required
 def edit(id):
     try:
         # Select contrat in BDD
@@ -85,6 +100,7 @@ def edit(id):
         return redirect(url_for('contrat_bp.index'))
 
 @contrat_bp.route('/contrat/del/<int:id>', methods=['get', 'post'])
+@login_required
 def delete(id):
     try:
         # Select contrat in BDD

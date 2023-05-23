@@ -1,11 +1,14 @@
-from flask import Flask, Blueprint, request, render_template, redirect, url_for, flash
+from flask import Blueprint, request, render_template, redirect, url_for, flash
 from app.forms import LocataireForm
 from app.models import Locataire
 from app import db
+from sqlalchemy.orm import joinedload
+from flask_security import login_required
 
 locataire_bp = Blueprint('locataire_bp', __name__)
 
 @locataire_bp.route('/locataire')
+@login_required
 def index():
     # Select all locataires in BDD
     locataires = db.session.query(Locataire).all()
@@ -14,6 +17,7 @@ def index():
     return render_template('locataire/index.html', title='Liste locataires', locataires=locataires_tries, nb_locataires=len(locataires_tries))
 
 @locataire_bp.route('/locataire/add', methods=['get', 'post'])
+@login_required
 def add():
     try:
         form = LocataireForm()
@@ -31,7 +35,21 @@ def add():
         flash('Erreur, un problème est survenu lors de l\'ajout d\'un locataire', 'danger')
         return redirect(url_for('locataire_bp.index'))
 
+@locataire_bp.route('/locataire/details/<int:id>', methods=['get', 'post'])
+@login_required
+def details(id):
+    try:
+        # Select locataire in BDD
+        locataire = db.session.get(Locataire, id)
+        # Charger les relations pour éviter les requêtes supplémentaires
+        db.session.query(Locataire).options(joinedload(Locataire.contrats), joinedload(Locataire.quittances)).filter(Locataire.id == id).first()
+        return render_template('locataire/details.html', locataire=locataire, title='Details locataire', route='locataire_bp')
+    except Exception:
+        flash('Erreur, un problème est survenu lors de la modification du locataire', 'danger')
+        return redirect(url_for('locataire_bp.index'))
+
 @locataire_bp.route('/locataire/edit/<int:id>', methods=['get', 'post'])
+@login_required
 def edit(id):
     try:
         # Select locataire in BDD
@@ -56,6 +74,7 @@ def edit(id):
         return redirect(url_for('locataire_bp.index'))
 
 @locataire_bp.route('/locataire/del/<int:id>', methods=['get', 'post'])
+@login_required
 def delete(id):
     try:
         # Select locataire in BDD

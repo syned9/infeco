@@ -1,5 +1,6 @@
 from app import db
 from datetime import datetime, date
+from flask_security import UserMixin, RoleMixin
 from sqlalchemy import Column, Integer, String, DateTime, Float, ForeignKey, Boolean, Text, Date
 from sqlalchemy.orm import relationship
 
@@ -144,6 +145,7 @@ class EtatLieux(db.Model):
         return f"<EtatLieux {self.date}, {self.situation}, {self.contrat}>"
 
 class Quittance(db.Model):
+    __tablename__ = 'quittance'
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     date_debut = Column(DateTime, nullable=False)
     date_fin = Column(DateTime, nullable=False)
@@ -162,3 +164,27 @@ class Quittance(db.Model):
     def __repr__(self):
         return f'<Quittance {self.id}>'
 
+
+class Role(db.Model, RoleMixin):
+    __tablename__ = 'roles'
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    name = Column(String(80), unique=True)
+    description = Column(String(255))
+    user_roles = relationship('UserRole', back_populates='role', cascade='all, delete-orphan')
+
+
+
+class User(db.Model, UserMixin):
+    __tablename__ = 'users'
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    username = Column(String(50), unique=True, nullable=False)
+    password = Column(String(255))
+    active = Column(Boolean)
+    user_roles = relationship('UserRole', back_populates='user', cascade='all, delete-orphan')
+
+class UserRole(db.Model):
+    __tablename__ = 'user_roles'
+    user_id = Column(Integer, ForeignKey('users.id'), primary_key=True)
+    role_id = Column(Integer, ForeignKey('roles.id'), primary_key=True)
+    user = relationship('User', back_populates='user_roles')
+    role = relationship('Role', back_populates='user_roles')
