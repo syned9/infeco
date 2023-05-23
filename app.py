@@ -22,7 +22,7 @@ with app.app_context():
                 db.session.add(typePaiement3)
 
         if not Role.query.filter_by(name='utilisateur').first():
-                role = TypePaiement(name='utilisateur')
+                role = Role(name='utilisateur')
                 db.session.add(role)
 
         db.session.commit()
