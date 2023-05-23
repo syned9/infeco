@@ -11,6 +11,7 @@ class Config:
 class ProductionConfig(Config):
     # SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
     SQLALCHEMY_DATABASE_URI = os.environ['JAWSDB_URL']
+    PORT = 5000
     DEBUG = False
     FLASK_ENV = 'production'
 
