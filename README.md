@@ -10,8 +10,3 @@ pip install -r requirements.txt
 ```
 python app.py
 ```
-
-# diagramme
-```
-<img src="app/static/img/capture_écran_test_failed_all.png">
-<img src="app/static/img/capture_écran_test_passed_all.png">
