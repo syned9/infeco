@@ -37,9 +37,13 @@
                                 {% for paiement in paiements %}
                                     <tr>
                                         <td>{{paiement.libelle}}</td>
-                                        <td>{{paiement.date}}</td>
+                                        <td>{{paiement.date.strftime("%d/%m/%Y")}}</td>
                                         <td>{{paiement.montant}}</td>
-                                        <td>{{paiement.origine}}</td>
+                                        {% if paiement.origine %}
+                                        <td>caisse d'allocation familiale</td>
+                                        {% else %}
+                                        <td>locataire</td>
+                                        {% endif %}
                                         <td>{{paiement.type_paiement.libelle}}</td>
                                         <td>{{paiement.contrat.libelle}}</td>
                                         <td>

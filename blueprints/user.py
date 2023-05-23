@@ -39,7 +39,7 @@ def index():
     return redirect(url_for('appartement_bp.index'))
 
 @user_bp.route('/add_user', methods=['GET', 'POST'])
-# @login_required
+@login_required
 def add_user():
     # Récupérer tous les rôles disponibles
     roles = db.session.query(Role).all()

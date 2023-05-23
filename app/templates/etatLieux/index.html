@@ -34,7 +34,7 @@
                             <tbody>
                                 {% for etatLieux in allEtatLieux %}
                                     <tr>
-                                        <td>{{etatLieux.date}}</td>
+                                        <td>{{etatLieux.date.strftime("%d/%m/%Y")}}</td>
                                         <td>{{etatLieux.remarque}}</td>
                                         {% if etatLieux.situation == 0 %}
                                             <td>Entré</td>
