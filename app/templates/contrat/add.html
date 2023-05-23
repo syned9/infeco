@@ -25,11 +25,13 @@
                 {{form.date_fin.label(class="form-label")}}
                 {{form.date_fin(class="form-control")}}
             </div>
-            <h3>Dépot de garantie</h3>
-            <div class="col-md-3">
-                {{form.montant.label(class="form-label")}}
-                {{form.montant(class="form-control")}}
-            </div>
+            {% if depot %}
+                <h3>Dépot de garantie</h3>
+                <div class="col-md-3">
+                    {{form.montant.label(class="form-label")}}
+                    {{form.montant(class="form-control")}}
+                </div>
+            {% endif %}
             <div class="col-12">
                 {{form.submit(class="btn btn-primary")}}
             </div>

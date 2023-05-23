@@ -3,7 +3,7 @@ from app.models import TypePaiement, Role, Agence
 from instance.config import DevelopmentConfig, ProductionConfig, TestingConfig
 import os
 
-app = create_app(ProductionConfig)
+app = create_app(TestingConfig)
 
 with app.app_context():
         db.create_all()

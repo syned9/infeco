@@ -66,7 +66,7 @@ def add():
                 flash('Le dépôt de garantie a bien été validé', 'success')
                 return redirect(url_for('contrat_bp.index'))
             flash('Le dépôt de garantie n\'est pas au bon montant de' + appartement.depot_garantie, 'warning')
-        return render_template('contrat/add.html', form=form, title='Ajouter un contrat', route='contrat_bp')
+        return render_template('contrat/add.html', form=form, title='Ajouter un contrat', route='contrat_bp', depot=True)
     except Exception:
         flash('Erreur, un problème est survenu lors de l\'ajout d\'un contrat', 'danger')
         return redirect(url_for('contrat_bp.index'))
@@ -97,7 +97,7 @@ def edit(id):
             # Message flash ok
             flash('Le contrat a bien été modifié', 'success')
             return redirect(url_for('contrat_bp.index'))
-        return render_template('contrat/add.html', form=form, title='Modifier un contrat', route='contrat_bp')
+        return render_template('contrat/add.html', form=form, title='Modifier un contrat', route='contrat_bp', depot=False)
     except Exception:
         flash('Erreur, un problème est survenu lors de la modification du contrat', 'danger')
         return redirect(url_for('contrat_bp.index'))
