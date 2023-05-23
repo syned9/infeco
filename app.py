@@ -1,6 +1,7 @@
 from app import db,create_app
 from app.models import TypePaiement
 from instance.config import DevelopmentConfig, ProductionConfig, TestingConfig
+import os
 
 app = create_app(ProductionConfig)
 
@@ -23,4 +24,4 @@ with app.app_context():
         db.session.commit()
 
 if __name__ == '__main__':
-    app.run()
+    app.run(port=os.environ.get('PORT', 5000))
