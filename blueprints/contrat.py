@@ -46,23 +46,26 @@ def add():
         form.appartement_id.choices = [(appartement.id, appartement.libelle.upper() + ', ' + appartement.adresse) for appartement in appartements_tries]
         form.locataire_id.choices = [(locataire.id, locataire.nom + ' ' + locataire.prenom) for locataire in locataires_tries]
         if form.validate_on_submit():
-            # Insert contrat in BDD
-            contrat = Contrat(libelle=form.libelle.data, date_debut=form.date_debut.data, date_fin=form.date_fin.data, 
-                                locataire_id=form.locataire_id.data, appartement_id=form.appartement_id.data) #, statut=0
-            db.session.add(contrat)
-            db.session.commit()
-            # Message flash ok
-            flash('Le contrat a bien été enregistrer', 'success')
-            contrat_id = db.session.query(Contrat.id).order_by(desc(Contrat.id)).first()
-            # Insert paiement in BDD
-            paiement = Paiement(libelle='Dépot de garantie', date=date.today(), montant=form.montant.data,
-                                origine=0, type_paiement_id=3, 
-                                contrat_id=contrat_id[0])
-            db.session.add(paiement)
-            db.session.commit()
-            # Message flash ok
-            flash('Le dépôt de garantie a bien été validé', 'success')
-            return redirect(url_for('contrat_bp.index'))
+            appartement = db.session.get(Appartement, form.appartement_id.data)
+            if appartement.depot_garantie == form.montant.data:
+                # Insert contrat in BDD
+                contrat = Contrat(libelle=form.libelle.data, date_debut=form.date_debut.data, date_fin=form.date_fin.data, 
+                                    locataire_id=form.locataire_id.data, appartement_id=form.appartement_id.data) #, statut=0
+                db.session.add(contrat)
+                db.session.commit()
+                # Message flash ok
+                flash('Le contrat a bien été enregistrer', 'success')
+                contrat_id = db.session.query(Contrat.id).order_by(desc(Contrat.id)).first()
+                # Insert paiement in BDD
+                paiement = Paiement(libelle='Dépot de garantie', date=date.today(), montant=form.montant.data,
+                                    origine=0, type_paiement_id=3, 
+                                    contrat_id=contrat_id[0])
+                db.session.add(paiement)
+                db.session.commit()
+                # Message flash ok
+                flash('Le dépôt de garantie a bien été validé', 'success')
+                return redirect(url_for('contrat_bp.index'))
+            flash('Le dépôt de garantie n\'est pas au bon montant de' + appartement.depot_garantie, 'warning')
         return render_template('contrat/add.html', form=form, title='Ajouter un contrat', route='contrat_bp')
     except Exception:
         flash('Erreur, un problème est survenu lors de l\'ajout d\'un contrat', 'danger')

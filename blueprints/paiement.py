@@ -16,7 +16,7 @@ def index():
         # Charger les relations pour éviter les requêtes supplémentaires
         db.session.query(Paiement).options(joinedload(Paiement.type_paiement), joinedload(Paiement.contrat)).filter(Paiement.id == paiement.id)
     # Trier les paiements par date
-    paiements_tries = sorted(paiements, key=lambda x: x.date)
+    paiements_tries = sorted(paiements, key=lambda x: x.date, reverse=True)
     return render_template('paiement/index.html', title='Liste paiements', paiements=paiements_tries, nb_paiements=len(paiements_tries))
 
 @paiement_bp.route('/paiement/add', methods=['get', 'post'])
