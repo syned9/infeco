@@ -53,7 +53,7 @@ class QuittanceForm(FlaskForm):
 class UserForm(FlaskForm):
     username = StringField('Nom d\'utilisateur', validators=[DataRequired()])
     password = PasswordField('Mot de passe', validators=[DataRequired()])
-    # role = SelectField('Role', choices=[], validators=[DataRequired()])
+    role = SelectField('Role', choices=[], validators=[DataRequired()])
     submit = SubmitField('Créer')
 
 class LoginForm(FlaskForm):
