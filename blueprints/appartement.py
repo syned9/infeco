@@ -6,7 +6,7 @@ from flask_security import login_required
 
 appartement_bp = Blueprint('appartement_bp', __name__)
 
-@appartement_bp.route('/appartement')
+@appartement_bp.route('/')
 @login_required
 def index():
     # Select all appartements in BDD

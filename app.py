@@ -1,5 +1,5 @@
 from app import db,create_app
-from app.models import TypePaiement
+from app.models import TypePaiement, Role
 from instance.config import DevelopmentConfig, ProductionConfig, TestingConfig
 import os
 
@@ -20,6 +20,10 @@ with app.app_context():
         if not TypePaiement.query.filter_by(libelle='dépôt de garantie').first():
                 typePaiement3 = TypePaiement(libelle='dépôt de garantie')
                 db.session.add(typePaiement3)
+
+        if not Role.query.filter_by(name='utilisateur').first():
+                role = TypePaiement(name='utilisateur')
+                db.session.add(role)
 
         db.session.commit()
 
