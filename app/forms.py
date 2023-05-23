@@ -57,8 +57,8 @@ class UserForm(FlaskForm):
     submit = SubmitField('Créer')
 
 class LoginForm(FlaskForm):
-    username = StringField('Nom d\'utilisateur', validators=[DataRequired()]) 
-    password = PasswordField('Mot de passe', validators=[DataRequired()])
+    username = StringField('Nom d\'utilisateur', validators=[DataRequired()], render_kw={"placeholder": "Nom d'utilisateur"}) 
+    password = PasswordField('Mot de passe', validators=[DataRequired()], render_kw={"placeholder": "Mot de passe"})
     # remember_me = BooleanField('Se souvenir de moi')
     submit = SubmitField('Connexion')
 
