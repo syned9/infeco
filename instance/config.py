@@ -9,8 +9,8 @@ class Config:
     SECURITY_PASSWORD_SALT = 'infecoblock3'
 
 class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
-    # SQLALCHEMY_DATABASE_URI = os.environ['JAWSDB_URL']
+    # SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
+    SQLALCHEMY_DATABASE_URI = os.environ['JAWSDB_URL']
     DEBUG = False
     FLASK_ENV = 'production'
 
