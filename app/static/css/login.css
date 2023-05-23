@@ -15,7 +15,7 @@ body {
   z-index: 2;
 }
 
-.form-signin input[type="email"] {
+.form-signin input[type="text"] {
   margin-bottom: -1px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
@@ -26,15 +26,6 @@ body {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
-
-
-.bd-placeholder-img {
-    font-size: 1.125rem;
-    text-anchor: middle;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    user-select: none;
-  }
 
   @media (min-width: 768px) {
     .bd-placeholder-img-lg {
@@ -98,9 +89,4 @@ body {
   }
   .bd-mode-toggle {
     z-index: 1500;
-  }
-
-  .form-signin {
-    max-width: 330px;
-    padding: 15px;
   }
